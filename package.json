@@ -1,0 +1,45 @@
+{
+  "name": "metalsmith-svelte",
+  "version": "0.1.0",
+  "description": "Svelte plugin for Metalsmith",
+  "repository": "shinnn/metalsmith-buble",
+  "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+  "scripts": {
+    "pretest": "eslint --fix --format=codeframe index.js test.js",
+    "test": "node test.js",
+    "coverage": "istanbul cover --print=both test.js"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "metalsmith",
+    "metalsmith-plugin",
+    "svelte",
+    "html",
+    "script",
+    "transform",
+    "compile",
+    "compiler",
+    "transpile",
+    "transpiler",
+    "vanilla",
+    "template"
+  ],
+  "dependencies": {
+    "source-map-to-comment": "^1.1.0",
+    "svelte": "^1.0.4",
+    "to-fast-properties": "^1.0.2"
+  },
+  "devDependencies": {
+    "@shinnn/eslint-config-node": "^3.0.0",
+    "eslint": "^3.11.1",
+    "istanbul": "^0.4.5",
+    "metalsmith": "^2.3.0",
+    "tape": "^4.6.3"
+  },
+  "eslintConfig": {
+    "extends": "@shinnn/node"
+  }
+}
