@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-svelte",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Svelte plugin for Metalsmith",
   "repository": "shinnn/metalsmith-buble",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
