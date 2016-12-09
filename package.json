@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "source-map-to-comment": "^1.1.0",
-    "svelte": "^1.0.4",
+    "svelte": "^1.2.1",
     "to-fast-properties": "^1.0.2"
   },
   "devDependencies": {

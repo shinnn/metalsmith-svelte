@@ -22,7 +22,7 @@ module.exports = function metalsmithSvelte(options) {
     );
   }
 
-  return function metalsmithBublePlugin(files/* , metalsmith */) {
+  return function metalsmithBublePlugin(files, metalsmith) {
     Object.keys(files).forEach(originalFilename => {
       const ext = path.extname(originalFilename).toLowerCase();
       if (ext !== '.html') {
@@ -32,8 +32,7 @@ module.exports = function metalsmithSvelte(options) {
       const filename = originalFilename.replace(/\.html$/i, '.js');
 
       const result = compile(files[originalFilename].contents.toString(), Object.assign({}, options, {
-        // https://github.com/sveltejs/svelte/issues/43
-        // filename: path.join(metalsmith.directory(), metalsmith.source(), originalFilename)
+        filename: path.join(metalsmith.directory(), metalsmith.source(), originalFilename)
       }));
 
       if (options.sourceMap === true) {

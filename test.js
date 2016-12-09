@@ -17,7 +17,7 @@ test('metalsmith-svelte', t => {
 
     t.strictEqual(
       String(files['source.js'].contents).split('\n')[0],
-      'function renderMainFragment ( root, component, target ) {',
+      'function renderMainFragment ( root, component ) {',
       'should compile a file with Svelte compiler.'
     );
     t.strictEqual(
@@ -56,7 +56,7 @@ test('metalsmith-svelte', t => {
         sources: [],
         sourcesContent: [],
         names: [],
-        mappings: `;;,${';'.repeat(111)},;;`
+        mappings: ';'.repeat(129)
       },
       'should support Svelte compiler options'
     );
@@ -68,7 +68,7 @@ test('metalsmith-svelte', t => {
     t.strictEqual(err, null, 'should support non-ASCII filename.');
     t.strictEqual(
       String(files['☺️.js'].contents).split('\n').splice(-2)[0],
-      '//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjpudWxsLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiLDs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7LDs7In0=',
+      '//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjpudWxsLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=',
       'should append Base64-encoded source map when `sourceMap` option is \'inline\'.'
     );
   });
