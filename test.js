@@ -1,11 +1,13 @@
 'use strict';
 
+const {join} = require('path');
+
 const Metalsmith = require('metalsmith');
 const svelte = require('.');
 const test = require('tape');
 
 test('metalsmith-svelte', t => {
-  t.plan(11);
+  t.plan(12);
 
   new Metalsmith('.')
   .use(svelte())
@@ -17,7 +19,7 @@ test('metalsmith-svelte', t => {
 
     t.strictEqual(
       String(files['source.js'].contents).split('\n')[0],
-      'function renderMainFragment ( root, component ) {',
+      'function create_main_fragment ( state, component ) {',
       'should compile a file with Svelte compiler.'
     );
     t.strictEqual(
@@ -30,20 +32,23 @@ test('metalsmith-svelte', t => {
   new Metalsmith('.')
   .use(svelte({
     name: 'GulpSvelteTest',
-    format: 'cjs',
+    format: 'es',
+    generate: 'ssr',
     sourceMap: true
   }))
   .run({'source.html': {contents: new Buffer(0)}}, (err, files) => {
     t.strictEqual(err, null, 'should accept an empty file.');
 
+    const contents = files['source.js'].contents.toString();
+
     t.strictEqual(
-      String(files['source.js'].contents).split('\n').splice(-3)[0],
-      'module.exports = GulpSvelteTest;',
-      'should support Svelte compiler options'
+      contents.split('\n').splice(-3)[0],
+      'export default GulpSvelteTest;',
+      'should support Svelte compiler options.'
     );
 
     t.strictEqual(
-      String(files['source.js'].contents).split('\n').splice(-2)[0],
+      contents.split('\n').splice(-2)[0],
       '//# sourceMappingURL=source.js.map',
       'should append source map URL when `sourceMap` option is \'inline\'.'
     );
@@ -53,12 +58,12 @@ test('metalsmith-svelte', t => {
       {
         version: 3,
         file: null,
-        sources: [],
-        sourcesContent: [],
+        sources: [join(__dirname, 'src', 'source.html')],
+        sourcesContent: [''],
         names: [],
-        mappings: ';'.repeat(129)
+        mappings: ';'.repeat(36)
       },
-      'should support Svelte compiler options'
+      'should generate valid source map.'
     );
   });
 
@@ -68,18 +73,25 @@ test('metalsmith-svelte', t => {
     t.strictEqual(err, null, 'should support non-ASCII filename.');
     t.strictEqual(
       String(files['☺️.js'].contents).split('\n').splice(-2)[0],
-      '//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjpudWxsLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=',
+      `//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjpudWxsLCJzb3VyY2VzIjpbIi9Vc2Vycy9zaGlubm4vZ2l0aHViL21ldGFsc21pdGgtc3ZlbHRlL3NyYy/imLrvuI8uaHRtbCJdLCJzb3VyY2VzQ29udGVudCI6WyI8ZGl2IC8+Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI${'7Ozs'.repeat(59)}7OyJ9`,
       'should append Base64-encoded source map when `sourceMap` option is \'inline\'.'
     );
   });
 
   new Metalsmith('.')
+  .source('custom_source_directory')
   .use(svelte({sourceMap: false}))
-  .run({'FOO.HTML': {contents: Buffer.from('</>')}}, err => {
+  .run({'FOO.HTML': {contents: Buffer.from('</>')}}, ({name, filename}) => {
     t.strictEqual(
-      err.name,
+      name,
       'ParseError',
       'should fail when svelte cannot transpile the code.'
+    );
+
+    t.strictEqual(
+      filename,
+      join(__dirname, 'custom_source_directory', 'FOO.HTML'),
+      'should include filename to the error object.'
     );
   });
 
