@@ -29,12 +29,12 @@
   ],
   "dependencies": {
     "source-map-to-comment": "^1.1.0",
-    "svelte": "^1.2.1",
-    "to-fast-properties": "^1.0.2"
+    "svelte": "^1.22.2",
+    "to-fast-properties": "^1.0.3"
   },
   "devDependencies": {
     "@shinnn/eslint-config-node": "^3.0.0",
-    "eslint": "^3.11.1",
+    "eslint": "^3.19.0",
     "istanbul": "^0.4.5",
     "metalsmith": "^2.3.0",
     "tape": "^4.6.3"
