@@ -20,11 +20,11 @@ module.exports = function metalsmithSvelte(options) {
   return function metalsmithBublePlugin(files, metalsmith) {
     for (const originalFilename of Object.keys(files)) {
       const ext = path.extname(originalFilename).toLowerCase();
-      if (ext !== '.html') {
+      if (ext !== '.htm' && ext !== '.html' && ext !== '.svelte') {
         return;
       }
 
-      const filename = originalFilename.replace(/\.html$/i, '.js');
+      const filename = originalFilename.replace(/\.(html?|svelte)$/i, '.js');
 
       const result = compile(files[originalFilename].contents.toString(), Object.assign({}, options, {
         filename: path.join(metalsmith.source(), originalFilename)

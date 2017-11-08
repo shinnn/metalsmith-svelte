@@ -36,7 +36,7 @@ test('metalsmith-svelte', t => {
     generate: 'ssr',
     sourceMap: true
   }))
-  .run({'source.html': {contents: Buffer.alloc(0)}}, (err, files) => {
+  .run({'source.htm': {contents: Buffer.alloc(0)}}, (err, files) => {
     t.equal(err, null, 'should accept an empty file.');
 
     const contents = files['source.js'].contents.toString();
@@ -58,7 +58,7 @@ test('metalsmith-svelte', t => {
       {
         version: 3,
         file: null,
-        sources: [join(__dirname, 'src', 'source.html')],
+        sources: [join(__dirname, 'src', 'source.htm')],
         sourcesContent: [''],
         names: [],
         mappings: ';'.repeat(35)
@@ -69,11 +69,10 @@ test('metalsmith-svelte', t => {
 
   new Metalsmith('.')
   .use(svelte({sourceMap: 'inline'}))
-  .run({'☺️.html': {contents: Buffer.from('<div />')}}, (err, files) => {
-    t.equal(err, null, 'should support non-ASCII filename.');
-    t.equal(
-      String(files['☺️.js'].contents).split('\n').splice(-2)[0],
-      `//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjpudWxsLCJzb3VyY2VzIjpbIi9Vc2Vycy9zaGlubm4vZ2l0aHViL21ldGFsc21pdGgtc3ZlbHRlL3NyYy/imLrvuI8uaHRtbCJdLCJzb3VyY2VzQ29udGVudCI6WyI8ZGl2IC8+Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI${'7Ozs'.repeat(71)}7In0=`,
+  .run({'☺️.svelte': {contents: Buffer.from('<div />')}}, (err, files) => {
+    t.equal(err, null, 'should support .svelte file extension.');
+    t.ok(
+      String(files['☺️.js'].contents).split('\n').splice(-2)[0].startsWith('//# sourceMappingURL=data:application/json;base64,'),
       'should append Base64-encoded source map when `sourceMap` option is \'inline\'.'
     );
   });
