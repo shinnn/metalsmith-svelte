@@ -29,15 +29,15 @@
   ],
   "dependencies": {
     "source-map-to-comment": "^1.1.0",
-    "svelte": "^1.22.2",
-    "to-fast-properties": "^1.0.3"
+    "svelte": "^1.41.2",
+    "to-fast-properties": "^2.0.0"
   },
   "devDependencies": {
-    "@shinnn/eslint-config-node": "^3.0.0",
-    "eslint": "^3.19.0",
+    "@shinnn/eslint-config-node": "^4.0.2",
+    "eslint": "^4.10.0",
     "istanbul": "^0.4.5",
     "metalsmith": "^2.3.0",
-    "tape": "^4.6.3"
+    "tape": "^4.8.0"
   },
   "eslintConfig": {
     "extends": "@shinnn/node"
