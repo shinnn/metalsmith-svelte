@@ -6,10 +6,9 @@
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
   "scripts": {
     "pretest": "eslint --fix --format=codeframe index.js test.js",
-    "test": "node test.js",
-    "coverage": "istanbul cover --print=both test.js"
+    "test": "istanbul cover test.js"
   },
-  "license": "MIT",
+  "license": "ISC",
   "files": [
     "index.js"
   ],

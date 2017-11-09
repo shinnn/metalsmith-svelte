@@ -17,7 +17,7 @@ npm install metalsmith-svelte
 
 ## Usage
 
-### [CLI](https://github.com/metalsmith/metalsmith#cli)
+### [CLI](https://github.com/segmentio/metalsmith#cli)
 
 Add the `metalsmith-svelte` field to your `metalsmith.json`.
 
@@ -32,7 +32,7 @@ Add the `metalsmith-svelte` field to your `metalsmith.json`.
 }
 ```
 
-### [API](https://github.com/metalsmith/metalsmith#api)
+### [API](https://github.com/segmentio/metalsmith#api)
 
 ```javascript
 const Metalsmith = require('metalsmith');
@@ -67,6 +67,4 @@ Default: `false`
 
 ## License
 
-Copyright (c) 2016 - 2017 [Shinnosuke Watanabe](https://github.com/shinnn)
-
-Licensed under [the MIT License](./LICENSE).
+[ISC License](./LICENSE) © 2017 Shinnosuke Watanabe
