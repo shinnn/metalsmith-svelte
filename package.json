@@ -27,7 +27,6 @@
     "template"
   ],
   "dependencies": {
-    "safe-buffer": "^5.1.1",
     "source-map-to-comment": "^1.1.0",
     "svelte": "^1.41.2",
     "to-fast-properties": "^2.0.0"

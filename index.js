@@ -4,7 +4,6 @@ const inspect = require('util').inspect;
 const path = require('path');
 
 const compile = require('svelte').compile;
-const SafeBuffer = require('safe-buffer').Buffer;
 const sourceMapToComment = require('source-map-to-comment');
 const toFastProperties = require('to-fast-properties');
 
@@ -33,7 +32,7 @@ module.exports = function metalsmithSvelte(options) {
       if (options.sourceMap === true) {
         const sourcemapPath = `${filename}.map`;
         files[sourcemapPath] = {
-          contents: SafeBuffer.from(JSON.stringify(result.map))
+          contents: Buffer.from(JSON.stringify(result.map))
         };
 
         result.code += `\n//# sourceMappingURL=${
@@ -47,7 +46,7 @@ module.exports = function metalsmithSvelte(options) {
       delete files[originalFilename];
       toFastProperties(files);
 
-      files[filename].contents = SafeBuffer.from(result.code);
+      files[filename].contents = Buffer.from(result.code);
     }
   };
 };
