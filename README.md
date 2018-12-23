@@ -52,9 +52,12 @@ new Metalsmith('./source')
 
 ### Options
 
-All [Svelte compiler options](https://github.com/sveltejs/svelte#compiler-options) are available except for `filename` that will be automatically set.
+[Svelte compiler options](https://github.com/sveltejs/svelte#compiler-options) are available except for:
 
-In addition the following option is available:
+* `filename` option is not supported and will be automatically set.
+* `onerror` option is not supported as there is no value to use it.
+
+In addition the following option is supported:
 
 #### options.sourceMap
 

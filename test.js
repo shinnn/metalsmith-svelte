@@ -102,6 +102,22 @@ test('metalsmith-svelte', t => {
 		'should throw an error when it takes a non-Object argument.'
 	);
 
+	try {
+		metalsmithSvelte({
+			filename: 'f',
+			onerror: t.fail
+		});
+		t.fail('Unexpectedly succeeded.');
+	} catch (err) {
+		t.equal(
+			err.toString(),
+			`TypeError: Found 2 errors in metalsmith-svelte options:
+1. metalsmith-svelte doesn't support \`filename\` option as it's automatically set, but 'f' was provided.
+2. metalsmith-svelte doesn't support \`onerror\` option, but [Function: bound] was provided.`,
+			'should throw an error when it takes unsupported options.'
+		);
+	}
+
 	t.throws(
 		() => metalsmithSvelte({sourceMap: [1]}),
 		/^TypeError.*Expected `sourceMap` option to be true, false or 'inline', but got \[ 1 \] \(array\)\./u,

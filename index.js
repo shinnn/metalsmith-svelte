@@ -1,6 +1,7 @@
 'use strict';
 
 const {dirname, extname, join, relative} = require('path');
+const {inspect} = require('util');
 
 const {compile} = require('svelte');
 const inspectWithKind = require('inspect-with-kind');
@@ -31,10 +32,34 @@ module.exports = function metalsmithSvelte(...args) {
 			throw error;
 		}
 
-		if (typeof options.sourceMap !== 'boolean' && options.sourceMap !== 'inline') {
-			const error = new TypeError(`Expected \`sourceMap\` option to be true, false or 'inline', but got ${
-				inspectWithKind(options.sourceMap)
+		const errors = [];
+		const {filename, sourceMap, onerror} = options;
+
+
+		if (sourceMap !== undefined && typeof sourceMap !== 'boolean' && sourceMap !== 'inline') {
+			errors.push(`Expected \`sourceMap\` option to be true, false or 'inline', but got ${
+				inspectWithKind(sourceMap)
 			}.`);
+		}
+
+		if (onerror !== undefined) {
+			errors.push(`metalsmith-svelte doesn't support \`onerror\` option, but ${
+				inspect(onerror)
+			} was provided.`);
+		}
+
+		const errorLen = errors.length;
+
+		if (errorLen === 1) {
+			const error = new TypeError(errors[0]);
+			error.code = 'ERR_INVALID_OPT_VALUE';
+
+			throw error;
+		}
+
+		if (errorLen !== 0) {
+			const error = new TypeError(`Found ${errorLen} errors in metalsmith-svelte options:
+${errors.map((line, i) => `${i + 1}. ${line}`).join('\n')}`);
 			error.code = 'ERR_INVALID_OPT_VALUE';
 
 			throw error;
