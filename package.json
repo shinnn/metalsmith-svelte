@@ -4,11 +4,11 @@
   "description": "Svelte plugin for Metalsmith",
   "repository": "shinnn/metalsmith-buble",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+  "license": "ISC",
   "scripts": {
     "pretest": "eslint --fix --format=codeframe index.js test.js",
     "test": "istanbul cover test.js"
   },
-  "license": "ISC",
   "files": [
     "index.js"
   ],
@@ -27,6 +27,8 @@
     "template"
   ],
   "dependencies": {
+    "inspect-with-kind": "^1.0.5",
+    "is-plain-obj": "^1.1.0",
     "source-map-to-comment": "^1.1.0",
     "svelte": "^1.41.2",
     "to-fast-properties": "^2.0.0"

@@ -3,14 +3,14 @@
 const {join} = require('path');
 
 const Metalsmith = require('metalsmith');
-const svelte = require('.');
+const metalsmithSvelte = require('.');
 const test = require('tape');
 
 test('metalsmith-svelte', t => {
-  t.plan(12);
+  t.plan(11);
 
   new Metalsmith('.')
-  .use(svelte())
+  .use(metalsmithSvelte())
   .run({
     'source.html': {contents: Buffer.from('<div />')},
     'non-html.txt': {contents: Buffer.from('Hi')}
@@ -19,7 +19,7 @@ test('metalsmith-svelte', t => {
 
     t.equal(
       String(files['source.js'].contents).split('\n')[2],
-      'function create_main_fragment(state, component) {',
+      'function create_main_fragment(component, state) {',
       'should compile a file with Svelte compiler.'
     );
     t.equal(
@@ -30,7 +30,7 @@ test('metalsmith-svelte', t => {
   });
 
   new Metalsmith('.')
-  .use(svelte({
+  .use(metalsmithSvelte({
     name: 'GulpSvelteTest',
     format: 'es',
     generate: 'ssr',
@@ -61,14 +61,14 @@ test('metalsmith-svelte', t => {
         sources: [join(__dirname, 'src', 'source.htm')],
         sourcesContent: [''],
         names: [],
-        mappings: ';'.repeat(35)
+        mappings: ';'.repeat(58)
       },
       'should generate valid source map.'
     );
   });
 
   new Metalsmith('.')
-  .use(svelte({sourceMap: 'inline'}))
+  .use(metalsmithSvelte({sourceMap: 'inline'}))
   .run({'☺️.svelte': {contents: Buffer.from('<div />')}}, (err, files) => {
     t.equal(err, null, 'should support .svelte file extension.');
     t.ok(
@@ -79,7 +79,7 @@ test('metalsmith-svelte', t => {
 
   new Metalsmith('.')
   .source('custom_source_directory')
-  .use(svelte({sourceMap: false}))
+  .use(metalsmithSvelte({sourceMap: false}))
   .run({'FOO.HTML': {contents: Buffer.from('</>')}}, ({name, filename}) => {
     t.equal(
       name,
@@ -93,10 +93,26 @@ test('metalsmith-svelte', t => {
       'should include filename to the error object.'
     );
   });
+});
+
+test('metalsmith-svelte', t => {
+  t.throws(
+    () => metalsmithSvelte(-0),
+    /^TypeError.*Expected an <Object> to set Svelte compiler options, but got -0 \(number\)\./u,
+    'should throw an error when it takes a non-Object argument.'
+  );
 
   t.throws(
-    () => svelte({sourceMap: [1, 2, 3]}),
-    /^TypeError.* `sourceMap` option must be true, false or 'inline', but got \[ 1, 2, 3 ]\./,
-    'should throw a type error when it takes an invalid `sourceMap` option value.'
+    () => metalsmithSvelte({sourceMap: [1]}),
+    /^TypeError.*Expected `sourceMap` option to be true, false or 'inline', but got \[ 1 \] \(array\)\./u,
+    'should throw an error when it takes an invalid `sourceMap` option value.'
   );
+
+  t.throws(
+    () => metalsmithSvelte({}, {}),
+    /^RangeError.*Expected 0 or 1 argument \(<Object>\), but got 2 arguments\./u,
+    'should throw an error when it takes too many arguments.'
+  );
+
+  t.end();
 });
