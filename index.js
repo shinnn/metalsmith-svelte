@@ -49,10 +49,10 @@ module.exports = function metalsmithSvelte(...args) {
 			}
 
 			const filename = originalFilename.replace(/\.(html?|svelte)$/ui, '.js');
-
-			const {js} = compile(files[originalFilename].contents.toString(), Object.assign({}, options, { // eslint-disable-line prefer-object-spread
+			const {js} = compile(files[originalFilename].contents.toString(), {
+				...options,
 				filename: join(metalsmith.source(), originalFilename)
-			}));
+			});
 
 			if (options.sourceMap === true) {
 				const sourcemapPath = `${filename}.map`;
