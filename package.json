@@ -1,46 +1,49 @@
 {
-  "name": "metalsmith-svelte",
-  "version": "0.4.0-2",
-  "description": "Svelte plugin for Metalsmith",
-  "repository": "shinnn/metalsmith-buble",
-  "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
-  "license": "ISC",
-  "scripts": {
-    "pretest": "eslint --fix --format=codeframe index.js test.js",
-    "test": "istanbul cover test.js"
-  },
-  "files": [
-    "index.js"
-  ],
-  "keywords": [
-    "metalsmith",
-    "metalsmith-plugin",
-    "svelte",
-    "html",
-    "script",
-    "transform",
-    "compile",
-    "compiler",
-    "transpile",
-    "transpiler",
-    "vanilla",
-    "template"
-  ],
-  "dependencies": {
-    "inspect-with-kind": "^1.0.5",
-    "is-plain-obj": "^1.1.0",
-    "source-map-to-comment": "^1.1.0",
-    "svelte": "^1.41.2",
-    "to-fast-properties": "^2.0.0"
-  },
-  "devDependencies": {
-    "@shinnn/eslint-config-node": "^4.0.2",
-    "eslint": "^4.10.0",
-    "istanbul": "^0.4.5",
-    "metalsmith": "^2.3.0",
-    "tape": "^4.8.0"
-  },
-  "eslintConfig": {
-    "extends": "@shinnn/node"
-  }
+	"name": "metalsmith-svelte",
+	"version": "0.4.0-2",
+	"description": "Svelte plugin for Metalsmith",
+	"repository": "shinnn/metalsmith-buble",
+	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+	"license": "ISC",
+	"scripts": {
+		"pretest": "eslint .",
+		"test": "nyc node test.js"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"metalsmith",
+		"metalsmith-plugin",
+		"svelte",
+		"html",
+		"script",
+		"transform",
+		"compile",
+		"compiler",
+		"transpile",
+		"transpiler",
+		"vanilla",
+		"template"
+	],
+	"dependencies": {
+		"inspect-with-kind": "^1.0.5",
+		"is-plain-obj": "^1.1.0",
+		"svelte": "^2.16.0",
+		"to-fast-properties": "^2.0.0"
+	},
+	"devDependencies": {
+		"@shinnn/eslint-config": "^6.8.7",
+		"eslint": "^5.11.0",
+		"metalsmith": "^2.3.0",
+		"nyc": "^13.1.0",
+		"nyc-config-common": "^1.0.1",
+		"tape": "^4.9.1"
+	},
+	"eslintConfig": {
+		"extends": "@shinnn"
+	},
+	"nyc": {
+		"extends": "nyc-config-common"
+	}
 }

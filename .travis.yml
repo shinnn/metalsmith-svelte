@@ -4,6 +4,6 @@ node_js: node
 matrix:
   include:
   - dist: xenial
-    after_success: cat coverage/lcov.info | npx coveralls
+    after_success: node_modules/.bin/nyc report | npx coveralls
   - os: windows
     script: node test.js
