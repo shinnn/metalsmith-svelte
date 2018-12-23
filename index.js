@@ -35,6 +35,11 @@ module.exports = function metalsmithSvelte(...args) {
 		const errors = [];
 		const {filename, sourceMap, onerror} = options;
 
+		if (filename !== undefined) {
+			errors.push(`metalsmith-svelte doesn't support \`filename\` option as it's automatically set, but ${
+				inspect(filename)
+			} was provided.`);
+		}
 
 		if (sourceMap !== undefined && typeof sourceMap !== 'boolean' && sourceMap !== 'inline') {
 			errors.push(`Expected \`sourceMap\` option to be true, false or 'inline', but got ${
