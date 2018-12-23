@@ -1,5 +1,9 @@
 if: branch !~ ^v\d
-dist: xenial
 language: node_js
 node_js: node
-after_script: cat coverage/lcov.info | npx coveralls
+matrix:
+  include:
+  - dist: xenial
+    after_success: cat coverage/lcov.info | npx coveralls
+  - os: windows
+    script: node test.js
